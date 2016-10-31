@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse respone)
             throws ServletException, IOException {
-
+        request.setCharacterEncoding("utf-8");
         //获取表单数据
         String userName = request.getParameter("userName");
         String passWord = request.getParameter("passWord");
@@ -45,12 +45,12 @@ public class LoginServlet extends HttpServlet {
             }
             HttpSession session = request.getSession();
             session.setAttribute("current", currentUser);
-            respone.sendRedirect("mainTemp.jsp");
+            request.getRequestDispatcher("main").forward(request, respone);
+
         } else {
             //若不成，留在本页面，提示错误
             System.out.print("error");
             request.setAttribute("user", user);
-            request.setCharacterEncoding("gbk");
             request.setAttribute("error", "用户名或密码错误！");
             request.getRequestDispatcher("login.jsp").forward(request, respone);
         }

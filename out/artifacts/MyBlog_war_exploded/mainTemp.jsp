@@ -52,11 +52,7 @@
 <div class="container">
     <div class="row-fluid">
         <div class="col-md-9">
-            <div class="data_list">
-                <div class="data_list_title">
-                    <span class="glyphicon glyphicon-list"></span>&nbsp;日志列表
-                </div>
-            </div>
+            <jsp:include page="${mainPage}"></jsp:include>
         </div>
 
         <div class="col-md-3">
