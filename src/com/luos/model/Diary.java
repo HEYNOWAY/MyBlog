@@ -52,6 +52,8 @@ public class Diary {
         this.releaseDate = releaseDate;
     }
 
-
-
+    @Override
+    public String toString() {
+        return typeId+" "+title;
+    }
 }

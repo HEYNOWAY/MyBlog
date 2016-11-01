@@ -2,6 +2,7 @@ package com.luos.dao;
 
 import com.luos.model.Diary;
 import com.luos.util.DateFormatUtil;
+import com.luos.util.DbUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +24,7 @@ public class DiaryDao {
         ResultSet resultSet = pstmt.executeQuery();
         while (resultSet.next()){
             Diary diary = new Diary();
-            diary.setDairyId(resultSet.getInt("dairyId"));
+            diary.setDairyId(resultSet.getInt("diaryId"));
             diary.setTitle(resultSet.getString("title"));
             diary.setContent(resultSet.getString("content"));
             diary.setTypeId(resultSet.getInt("typeId"));
@@ -31,5 +32,19 @@ public class DiaryDao {
             dairyArrayList.add(diary);
         }
         return dairyArrayList;
+    }
+
+    public static void main(String[] args){
+        try {
+            Connection conn = DbUtil.getConn();
+            DiaryDao diaryDao = new DiaryDao();
+            List<Diary> diaryList = diaryDao.dariyList(conn);
+            for (Diary diary : diaryList){
+                System.out.println(diary.getReleaseDate());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -29,7 +29,7 @@ public class MainServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         List<Diary> diaryList = getDiaryList();
         request.setAttribute("diaryList", diaryList);
-        request.setAttribute("mainPage", "dairy/dairylist.jsp");
+        request.setAttribute("mainPage", "dairy/diarylist.jsp");
         request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
     }
 
