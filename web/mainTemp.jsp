@@ -42,8 +42,9 @@
             </ul>
             <form name="myForm" class="navbar-form navbar-right" method="post" action="">
                 <input class="form-control" id="s_title" name="s_title" type="text" placeholder="Search...">
-                <button type="submit" class="btn" onkeydown="if(event.keyCode==13) myForm.submit()"><i
-                        class="icon-search"></i>&nbsp;搜索日志
+                <button type="submit" class="btn btn-default">
+                    <%--onkeydown="if(event.keyCode==13) myForm.submit()--%>
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;搜索日志
                 </button>
             </form>
         </div><!-- /.navbar-collapse -->
