@@ -2,7 +2,9 @@ package com.luos.web;
 
 import com.luos.dao.DiaryDao;
 import com.luos.model.Diary;
+import com.luos.model.PageBean;
 import com.luos.util.DbUtil;
+import com.luos.util.PropertiesUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 主页面Servle
+ *
  * Created by luos on 2016/10/31.
  */
 public class MainServlet extends HttpServlet {
@@ -27,19 +31,23 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse respone) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        List<Diary> diaryList = getDiaryList();
-        request.setAttribute("diaryList", diaryList);
-        request.setAttribute("mainPage", "dairy/diarylist.jsp");
-        request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
-    }
 
-    private List<Diary> getDiaryList() {
-        DiaryDao diaryDao = new DiaryDao();
-        List<Diary> diaryList = null;
+        int total = 0;  //数据的总条数
+        String page = request.getParameter("page"); //当前页面
+        if(page==null){
+            page = "1";
+        }
+        String pageSize = PropertiesUtil.getValue("pageSize"); //每页的页数多少
+        List<Diary> diaryList = new ArrayList<>(); //返回的数据列表
+
+        //从数据库获取数据列表和数据的总条数
         Connection conn = null;
         try {
             conn = DbUtil.getConn();
-            diaryList = diaryDao.dariyList(conn);
+            DiaryDao diaryDao = new DiaryDao();
+            PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(pageSize));
+            diaryList = diaryDao.diaryList(conn,pageBean);
+            total = diaryDao.diaryCount(conn);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -49,6 +57,53 @@ public class MainServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        return diaryList;
+
+        //获取底栏的分页
+        String pageCode = getPagation(total,Integer.parseInt(page),Integer.parseInt(pageSize));
+
+        request.setAttribute("pageCode",pageCode);
+        request.setAttribute("diaryList", diaryList);
+        request.setAttribute("mainPage", "dairy/diarylist.jsp");
+        request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
     }
+
+
+    /**
+     * //拼接底栏的分页
+     *
+     * @param totalNum  数据的总条数
+     * @param currentPage  当前页面
+     * @param pageSize 每页的页数多少
+     * @return
+     */
+    private String getPagation(int totalNum,int currentPage,int pageSize){
+        int totalPage=totalNum%pageSize==0?totalNum/pageSize:totalNum/pageSize+1;
+        StringBuffer pageCode=new StringBuffer();
+        pageCode.append("<li><a href='main?page=1'>首页</a></li>");
+        if(currentPage==1){
+            pageCode.append("<li class='disabled'><a href='#'>上一页</a></li>");
+        }else{
+            pageCode.append("<li><a href='main?page="+(currentPage-1)+"'>上一页</a></li>");
+        }
+        for(int i=currentPage-2;i<=currentPage+2;i++){
+            if(i<1||i>totalPage){
+                continue;
+            }
+            if(i==currentPage){
+                pageCode.append("<li class='active'><a href='#'>"+i+"</a></li>");
+            }else{
+                pageCode.append("<li><a href='main?page="+i+"'>"+i+"</a></li>");
+            }
+        }
+        if(currentPage==totalPage){
+            pageCode.append("<li class='disabled'><a href='#'>下一页</a></li>");
+        }else{
+            pageCode.append("<li><a href='main?page="+(currentPage+1)+"'>下一页</a></li>");
+        }
+        pageCode.append("<li><a href='main?page="+totalPage+"'>尾页</a></li>");
+
+        return pageCode.toString();
+    }
+
+
 }

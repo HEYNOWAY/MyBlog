@@ -1,6 +1,7 @@
 package com.luos.dao;
 
 import com.luos.model.Diary;
+import com.luos.model.PageBean;
 import com.luos.util.DateFormatUtil;
 import com.luos.util.DbUtil;
 
@@ -16,10 +17,13 @@ import java.util.List;
  * Created by luos on 2016/11/1.
  */
 public class DiaryDao {
-    public List<Diary> dariyList(Connection conn) throws SQLException, ParseException {
+    public List<Diary> diaryList(Connection conn, PageBean pageBean) throws SQLException, ParseException {
         List<Diary> dairyArrayList = new ArrayList<>();
         StringBuffer sql = new StringBuffer("select * from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId ");
         sql.append("order by releaseDate desc");
+        if(pageBean!=null){
+            sql.append(" limit "+pageBean.getStartpage()+","+pageBean.getPageSize());
+        }
         PreparedStatement pstmt = conn.prepareStatement(sql.toString());
         ResultSet resultSet = pstmt.executeQuery();
         while (resultSet.next()){
@@ -34,14 +38,23 @@ public class DiaryDao {
         return dairyArrayList;
     }
 
+    public int diaryCount(Connection conn) throws SQLException {
+        StringBuffer sql = new StringBuffer("select count(*) as total from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId ");
+        PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+        ResultSet resultSet = pstmt.executeQuery();
+        if (resultSet.next()){
+            return resultSet.getInt("total");
+        } else {
+            return 0;
+        }
+    }
+
     public static void main(String[] args){
         try {
             Connection conn = DbUtil.getConn();
             DiaryDao diaryDao = new DiaryDao();
-            List<Diary> diaryList = diaryDao.dariyList(conn);
-            for (Diary diary : diaryList){
-                System.out.println(diary.getReleaseDate());
-            }
+            int count = diaryDao.diaryCount(conn);
+            System.out.println("total is:"+count);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -28,3 +28,7 @@
 .data_list .diary_datas ul li{
 	margin-top: 15px;
 }
+
+.data_list .diary_datas ul li span{
+    font-size: 18px;
+}

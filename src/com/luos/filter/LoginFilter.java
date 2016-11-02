@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * 用户请求过滤器
- *
+ * <p>
  * Created by luos on 2016/11/1.
  */
 public class LoginFilter implements Filter {
@@ -18,16 +18,17 @@ public class LoginFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if(shouldFilt(request)){
+        if (shouldFilt(request)) {
             //如果过滤掉，回跳到login.jsp页面
             request.getRequestDispatcher("login.jsp");
         } else {
             //否则继续做下一次过滤
-            filterChain.doFilter(servletRequest,servletResponse);
+            filterChain.doFilter(servletRequest, servletResponse);
         }
     }
 
@@ -36,15 +37,15 @@ public class LoginFilter implements Filter {
 
     }
 
-    private boolean shouldFilt(HttpServletRequest request){
+    private boolean shouldFilt(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object object = session.getAttribute("current");
         String path = request.getServletPath();
         System.out.println(path);
-        return object==null
-                &&path.indexOf("login")<0
-                &&path.indexOf("bootstrap-3.3.7-dist")<0
-                &&path.indexOf("images")<0;
+        return object == null
+                && path.indexOf("login") < 0
+                && path.indexOf("bootstrap-3.3.7-dist") < 0
+                && path.indexOf("images") < 0;
     }
 
 }
