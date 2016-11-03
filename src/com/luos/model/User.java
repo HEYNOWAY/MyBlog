@@ -7,11 +7,34 @@ package com.luos.model;
  */
 public class User {
 
+    /**
+     * 用户Id
+     */
     private int userID;
+
+    /**
+     * 用户名
+     */
     private String userName;
+
+    /**
+     * 用户密码
+     */
     private String passWord;
+
+    /**
+     * 用户昵称
+     */
     private String nickName;
+
+    /**
+     * 头像照片路径
+     */
     private String imageName;
+
+    /**
+     * 心情描述
+     */
     private String mood;
 
     public User(){

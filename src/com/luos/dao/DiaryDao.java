@@ -17,6 +17,7 @@ import java.util.List;
  * Created by luos on 2016/11/1.
  */
 public class DiaryDao {
+    //获取日志列表
     public List<Diary> diaryList(Connection conn, PageBean pageBean) throws SQLException, ParseException {
         List<Diary> dairyArrayList = new ArrayList<>();
         StringBuffer sql = new StringBuffer("select * from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId ");
@@ -38,8 +39,11 @@ public class DiaryDao {
         return dairyArrayList;
     }
 
+    //获取日志的总条数
     public int diaryCount(Connection conn) throws SQLException {
-        StringBuffer sql = new StringBuffer("select count(*) as total from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId ");
+        StringBuffer sql = new StringBuffer("select count(*) as total " +
+                "from t_diary t1 , t_diarytype t2 " +
+                "where t1.typeId = t2.diarytypeId ");
         PreparedStatement pstmt = conn.prepareStatement(sql.toString());
         ResultSet resultSet = pstmt.executeQuery();
         if (resultSet.next()){
@@ -49,15 +53,16 @@ public class DiaryDao {
         }
     }
 
-    public static void main(String[] args){
-        try {
-            Connection conn = DbUtil.getConn();
-            DiaryDao diaryDao = new DiaryDao();
-            int count = diaryDao.diaryCount(conn);
-            System.out.println("total is:"+count);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
+//
+//    public static void main(String[] args){
+//        try {
+//            Connection conn = DbUtil.getConn();
+//            DiaryDao diaryDao = new DiaryDao();
+//            int count = diaryDao.diaryCount(conn);
+//            System.out.println("total is:"+count);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 }

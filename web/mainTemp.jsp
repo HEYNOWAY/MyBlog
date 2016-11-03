@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html lang="zh">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -66,10 +68,25 @@
                 <div class="data_list_title">
                     <span class="glyphicon glyphicon-tags"></span>&nbsp;按日志类别
                 </div>
+                <div class="diary_datas">
+                    <c:forEach var="diaryType" items="${diaryTypeList}">
+                        <ul>
+                            <span>&nbsp;&nbsp;<a href="#">${diaryType.typeName}&nbsp;&nbsp;(${diaryType.count})</a></span>
+                        </ul>
+                    </c:forEach>
+                </div>
+
             </div>
             <div class="data_list">
                 <div class="data_list_title">
                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;按日志日期
+                </div>
+                <div class="diary_datas">
+                    <c:forEach var="diariesForDate" items="${diariesForDateList}">
+                        <ul>
+                            <span>&nbsp;&nbsp;<a href="#">${diariesForDate.releaseDateStr}&nbsp;&nbsp;(${diariesForDate.diaryCount})</a></span>
+                        </ul>
+                    </c:forEach>
                 </div>
             </div>
         </div>

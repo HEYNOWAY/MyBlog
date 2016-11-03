@@ -3,13 +3,34 @@ package com.luos.model;
 import java.util.Date;
 
 /**
+ * 日志类
+ *
  * Created by luos on 2016/11/1.
  */
 public class Diary {
+    /**
+     * 日志ID
+     */
     private int dairyId;
+
+    /**
+     * 日志标题
+     */
     private String title;
+
+    /**
+     * 日志内容
+     */
     private String content;
-    private int typeId;
+
+    /**
+     * 日志类别
+     */
+    private int typeId = -1;
+
+    /**
+     * 日志发布日期
+     */
     private Date releaseDate;
 
     public int getDairyId() {

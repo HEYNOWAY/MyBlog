@@ -1,7 +1,11 @@
 package com.luos.web;
 
+import com.luos.dao.DiariesForDateDao;
 import com.luos.dao.DiaryDao;
+import com.luos.dao.DiaryTypeDao;
+import com.luos.model.DiariesForDate;
 import com.luos.model.Diary;
+import com.luos.model.DiaryType;
 import com.luos.model.PageBean;
 import com.luos.util.DbUtil;
 import com.luos.util.PropertiesUtil;
@@ -38,15 +42,21 @@ public class MainServlet extends HttpServlet {
             page = "1";
         }
         String pageSize = PropertiesUtil.getValue("pageSize"); //每页的页数多少
-        List<Diary> diaryList = new ArrayList<>(); //返回的数据列表
+        List<Diary> diaryList = new ArrayList<>(); //日志列表
+        List<DiaryType> diaryTypeList = new ArrayList<>(); //日志类型列表
+        List<DiariesForDate> diariesForDateList = new ArrayList<>();//根据日期分组的日志组类别
 
-        //从数据库获取数据列表和数据的总条数
+        //从数据库获取各列表数据
         Connection conn = null;
         try {
             conn = DbUtil.getConn();
             DiaryDao diaryDao = new DiaryDao();
+            DiaryTypeDao diaryTypeDao = new DiaryTypeDao();
+            DiariesForDateDao diariesForDateDao = new DiariesForDateDao();
             PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(pageSize));
             diaryList = diaryDao.diaryList(conn,pageBean);
+            diaryTypeList = diaryTypeDao.diaryTypeList(conn);
+            diariesForDateList = diariesForDateDao.diaryDateList(conn);
             total = diaryDao.diaryCount(conn);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,8 +71,10 @@ public class MainServlet extends HttpServlet {
         //获取底栏的分页
         String pageCode = getPagation(total,Integer.parseInt(page),Integer.parseInt(pageSize));
 
-        request.setAttribute("pageCode",pageCode);
+        request.setAttribute("diariesForDateList",diariesForDateList);
         request.setAttribute("diaryList", diaryList);
+        request.setAttribute("diaryTypeList",diaryTypeList);
+        request.setAttribute("pageCode",pageCode);
         request.setAttribute("mainPage", "dairy/diarylist.jsp");
         request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
     }
