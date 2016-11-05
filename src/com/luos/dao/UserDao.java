@@ -3,6 +3,7 @@ package com.luos.dao;
 import com.luos.model.User;
 import com.luos.util.DbUtil;
 import com.luos.util.Md5Util;
+import com.luos.util.PropertiesUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,6 +36,9 @@ public class UserDao {
             resultUser.setUserID(rs.getInt("id"));
             resultUser.setUserName(rs.getString("userName"));
             resultUser.setPassWord(rs.getString("password"));
+            resultUser.setNickName(rs.getString("nickName"));
+            resultUser.setImageName(PropertiesUtil.getValue("imageFile")+rs.getString("imageName"));
+            resultUser.setMood(rs.getString("mood"));
         }
         return resultUser;
     }

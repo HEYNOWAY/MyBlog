@@ -63,6 +63,11 @@
                 <div class="data_list_title">
                     <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心
                 </div>
+                <div class="user_image">
+                    <img src="${current.imageName}">
+                </div>
+                <div class="nickName">${current.nickName}</div>
+                <div class="userSign" style="color: #2e6da4">签名：${current.mood }</div>
             </div>
             <div class="data_list">
                 <div class="data_list_title">
@@ -71,20 +76,21 @@
                 <div class="diary_datas">
                     <c:forEach var="diaryType" items="${diaryTypeList}">
                         <ul>
-                            <span>&nbsp;&nbsp;<a href="#">${diaryType.typeName}&nbsp;&nbsp;(${diaryType.count})</a></span>
+                            <span>&nbsp;&nbsp;<a href="main?s_typeId=${diaryType.typeId }">${diaryType.typeName}&nbsp;&nbsp;(${diaryType.count})</a></span>
                         </ul>
                     </c:forEach>
                 </div>
 
             </div>
             <div class="data_list">
-                <div class="data_list_title">
+                <div class="data_list_title">t
                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;按日志日期
                 </div>
                 <div class="diary_datas">
                     <c:forEach var="diariesForDate" items="${diariesForDateList}">
                         <ul>
-                            <span>&nbsp;&nbsp;<a href="#">${diariesForDate.releaseDateStr}&nbsp;&nbsp;(${diariesForDate.diaryCount})</a></span>
+                            <span>&nbsp;&nbsp;<a
+                                    href="main?s_releaseDateStr=${diariesForDate.releaseDateStr }">${diariesForDate.releaseDateStr}&nbsp;&nbsp;(${diariesForDate.diaryCount})</a></span>
                         </ul>
                     </c:forEach>
                 </div>

@@ -16,7 +16,13 @@ import java.util.List;
  */
 public class DiaryTypeDao {
 
-    //获取日志类型的数据列表
+    /**
+     * 获取日志类型的数据列表
+     *
+     * @param conn
+     * @return
+     * @throws SQLException
+     */
     public List<DiaryType> diaryTypeList(Connection conn) throws SQLException {
         List<DiaryType> list = new ArrayList<>();
         String sql = "Select diaryTypeId,typeName, count(diaryId) as diaryCount " +

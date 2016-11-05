@@ -41,7 +41,6 @@ public class LoginFilter implements Filter {
         HttpSession session = request.getSession();
         Object object = session.getAttribute("current");
         String path = request.getServletPath();
-        System.out.println(path);
         return object == null
                 && path.indexOf("login") < 0
                 && path.indexOf("bootstrap-3.3.7-dist") < 0

@@ -21,7 +21,7 @@ public class Md5Util {
     public static String EncoderPwdMd5(String pwd){
         String encoderPwd = null;
         try {
-            //MessageDigest.getInstance()，参数传入一个算法——MD5
+            //MessageDigest.getInstance()，参数传入加密算法——MD5
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             BASE64Encoder base64en = new BASE64Encoder();
             encoderPwd = base64en.encode(md5.digest(pwd.getBytes("utf-8")));

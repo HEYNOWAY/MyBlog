@@ -33,6 +33,9 @@ public class Diary {
      */
     private Date releaseDate;
 
+    private String releaseDateStr;
+    private int diaryCount;
+
     public int getDairyId() {
         return dairyId;
     }
@@ -71,6 +74,23 @@ public class Diary {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+
+    public String getReleaseDateStr() {
+        return releaseDateStr;
+    }
+
+    public void setReleaseDateStr(String releaseDateStr) {
+        this.releaseDateStr = releaseDateStr;
+    }
+
+    public int getDiaryCount() {
+        return diaryCount;
+    }
+
+    public void setDiaryCount(int diaryCount) {
+        this.diaryCount = diaryCount;
     }
 
     @Override

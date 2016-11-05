@@ -38,17 +38,17 @@ public class DbUtil {
         }
     }
 
-
-	public static void main(String args[]) {
-		DbUtil dbUtil = new DbUtil();
-		try {
-			Connection conn = dbUtil.getConn();
-			System.out.println("连接成功！"+conn.toString());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("连接失败！");
-		}
-	}
+//
+//	public static void main(String args[]) {
+//		DbUtil dbUtil = new DbUtil();
+//		try {
+//			Connection conn = dbUtil.getConn();
+//			System.out.println("连接成功！"+conn.toString());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			System.out.println("连接失败！");
+//		}
+//	}
 
 }

@@ -93,4 +93,13 @@ public class User {
     public void setMood(String mood) {
         this.mood = mood;
     }
+
+    @Override
+    public String toString() {
+        return "useId : "+userID
+                +"\npassWord : "+passWord
+                +"\nnickName :　"+nickName
+                +"\nimageName : "+imageName
+                +"\nmodd : "+mood;
+    }
 }

@@ -32,3 +32,23 @@
 .data_list .diary_datas ul li span{
     font-size: 18px;
 }
+
+.data_list .user_image{
+	text-align:center;
+}
+
+.data_list .user_image img{
+	padding-top:10px;
+	width: 180px;;
+	height: 180px;;
+}
+
+.data_list .nickName{
+	text-align: center;
+	font-size: 24px;
+	font-style : inherit;
+}
+
+.data_list .userSign{
+	text-align: left;
+}

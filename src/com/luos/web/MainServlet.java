@@ -1,20 +1,21 @@
 package com.luos.web;
 
-import com.luos.dao.DiariesForDateDao;
 import com.luos.dao.DiaryDao;
 import com.luos.dao.DiaryTypeDao;
-import com.luos.model.DiariesForDate;
 import com.luos.model.Diary;
 import com.luos.model.DiaryType;
 import com.luos.model.PageBean;
 import com.luos.util.DbUtil;
 import com.luos.util.PropertiesUtil;
+import com.luos.util.StringUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse respone) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-
         int total = 0;  //数据的总条数
         String page = request.getParameter("page"); //当前页面
         if(page==null){
@@ -44,7 +44,8 @@ public class MainServlet extends HttpServlet {
         String pageSize = PropertiesUtil.getValue("pageSize"); //每页的页数多少
         List<Diary> diaryList = new ArrayList<>(); //日志列表
         List<DiaryType> diaryTypeList = new ArrayList<>(); //日志类型列表
-        List<DiariesForDate> diariesForDateList = new ArrayList<>();//根据日期分组的日志组类别
+        List<Diary> diariesForDateList = new ArrayList<>();//根据日期分组的日志组列表
+        Diary diary = getDiaryFormSession(request); //从session中获取Diary的值
 
         //从数据库获取各列表数据
         Connection conn = null;
@@ -52,12 +53,11 @@ public class MainServlet extends HttpServlet {
             conn = DbUtil.getConn();
             DiaryDao diaryDao = new DiaryDao();
             DiaryTypeDao diaryTypeDao = new DiaryTypeDao();
-            DiariesForDateDao diariesForDateDao = new DiariesForDateDao();
             PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(pageSize));
-            diaryList = diaryDao.diaryList(conn,pageBean);
+            diaryList = diaryDao.diaryList(conn,pageBean,diary);
             diaryTypeList = diaryTypeDao.diaryTypeList(conn);
-            diariesForDateList = diariesForDateDao.diaryDateList(conn);
-            total = diaryDao.diaryCount(conn);
+            diariesForDateList = diaryDao.diaryDateList(conn);
+            total = diaryDao.diaryCount(conn,diary);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -71,12 +71,72 @@ public class MainServlet extends HttpServlet {
         //获取底栏的分页
         String pageCode = getPagation(total,Integer.parseInt(page),Integer.parseInt(pageSize));
 
+        //request设置属性
         request.setAttribute("diariesForDateList",diariesForDateList);
         request.setAttribute("diaryList", diaryList);
         request.setAttribute("diaryTypeList",diaryTypeList);
         request.setAttribute("pageCode",pageCode);
         request.setAttribute("mainPage", "dairy/diarylist.jsp");
         request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
+    }
+
+    /**
+     * 从session中获取Diary的值
+     *
+     * @param request
+     * @return
+     * @throws UnsupportedEncodingException
+     */
+    private Diary getDiaryFormSession(HttpServletRequest request) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        String s_typeId=request.getParameter("s_typeId");
+        String s_releaseDateStr=request.getParameter("s_releaseDateStr");
+
+        String s_title=request.getParameter("s_title");
+        String all=request.getParameter("all");
+        Diary diary = new Diary();
+        if("true".equals(all)){
+            if(StringUtil.isNotEmpty(s_title)){
+                diary.setTitle(s_title);
+            }
+            session.removeAttribute("s_releaseDateStr");
+            session.removeAttribute("s_typeId");
+            session.setAttribute("s_title", s_title);
+        }else{
+            if(StringUtil.isNotEmpty(s_typeId)){
+                diary.setTypeId(Integer.parseInt(s_typeId));
+                session.setAttribute("s_typeId", s_typeId);
+                session.removeAttribute("s_releaseDateStr");
+                session.removeAttribute("s_title");
+            }
+            if(StringUtil.isNotEmpty(s_releaseDateStr)){
+                diary.setReleaseDateStr(s_releaseDateStr);
+                session.setAttribute("s_releaseDateStr", s_releaseDateStr);
+                session.removeAttribute("s_typeId");
+                session.removeAttribute("s_title");
+            }
+
+            if(StringUtil.isEmpty(s_typeId)){
+                Object o=session.getAttribute("s_typeId");
+                if(o!=null){
+                    diary.setTypeId(Integer.parseInt((String)o));
+                }
+            }
+
+            if(StringUtil.isEmpty(s_releaseDateStr)){
+                Object o=session.getAttribute("s_releaseDateStr");
+                if(o!=null){
+                    diary.setReleaseDateStr((String)o);
+                }
+            }
+            if(StringUtil.isEmpty(s_title)){
+                Object o=session.getAttribute("s_title");
+                if(o!=null){
+                    diary.setTitle((String)o);
+                }
+            }
+        }
+        return diary;
     }
 
 

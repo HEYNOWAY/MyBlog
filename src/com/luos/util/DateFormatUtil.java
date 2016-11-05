@@ -9,6 +9,13 @@ import java.util.Date;
  */
 public class DateFormatUtil {
 
+    /**
+     * 把Date类型转换成String类型
+     *
+     * @param date
+     * @param format
+     * @return
+     */
     public static String DateToString(Date date, String format){
         String result = "";
         SimpleDateFormat sdf = new SimpleDateFormat(format);
@@ -18,6 +25,14 @@ public class DateFormatUtil {
         return result;
     }
 
+    /**
+     * 把String类型转换成Date类型
+     *
+     * @param date
+     * @param format
+     * @return
+     * @throws ParseException
+     */
     public static Date StringToDate(String date, String format) throws ParseException {
         Date resultDate = null;
         SimpleDateFormat sdf = new SimpleDateFormat(format);
