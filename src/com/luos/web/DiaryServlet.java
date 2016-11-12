@@ -17,6 +17,8 @@ import java.sql.SQLException;
  */
 public class DiaryServlet extends HttpServlet {
 
+    DiaryDao diaryDao=new DiaryDao();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request,response);
@@ -28,14 +30,24 @@ public class DiaryServlet extends HttpServlet {
         String action = request.getParameter("action");
         if("show".equals(action)){
             diaryShow(request, response);
+        } else if("preSave".equals(action)){
+            diaryPreSave(request,response);
+        } else if("save".equals(action)){
+            diarySave(request,response);
         }
     }
 
+
+    /**
+     * 显示日志详细信息
+     *
+     * @param request
+     * @param response
+     */
     private void diaryShow(HttpServletRequest request, HttpServletResponse response) {
         Connection conn = null;
         try {
             conn = DbUtil.getConn();
-            DiaryDao diaryDao = new DiaryDao();
             String  diaryId = request.getParameter("diaryId");
             Diary diary = diaryDao.diaryShow(conn,diaryId);
             request.setAttribute("diary",diary);
@@ -51,4 +63,42 @@ public class DiaryServlet extends HttpServlet {
             }
         }
     }
+
+    private void diaryPreSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("mainPage", "diary/diarySave.jsp");
+        request.getRequestDispatcher("mainTemp.jsp").forward(request, response);
+    }
+
+
+    private void diarySave(HttpServletRequest request, HttpServletResponse response) {
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        String typeId = request.getParameter("typeId");
+
+        Diary diary = new Diary(title,content,Integer.parseInt(typeId));
+
+        Connection conn = null;
+        try {
+            conn = DbUtil.getConn();
+            int saveNums = diaryDao.addDiary(conn,diary);
+            if(saveNums>0){
+                request.getRequestDispatcher("main?all=true").forward(request, response);
+            } else {
+                request.setAttribute("diary",diary);
+                request.setAttribute("error","保存失败！请重新保存");
+                request.setAttribute("mainPage", "diary/diarySave.jsp");
+                request.getRequestDispatcher("mainTemp.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
 }

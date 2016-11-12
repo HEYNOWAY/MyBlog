@@ -18,6 +18,7 @@
     <link href="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/js/jQuery.js"></script>
     <script src="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/js/ckeditor/ckeditor.js"></script>
 
     <style type="text/css">
         body {
@@ -36,9 +37,11 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li role="presentation" class="active"><a href="main?all=true"> <span class="glyphicon glyphicon-home"></span>&nbsp;主页</a>
+                <li role="presentation" class="active"><a href="main?all=true"> <span
+                        class="glyphicon glyphicon-home"></span>&nbsp;主页</a>
                 </li>
-                <li class="active"><a href="#"> <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日记</a></li>
+                <li class="active"><a href="diary?action=preSave"> <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日记</a>
+                </li>
                 <li class="active"><a href="#"> <span class="glyphicon glyphicon-th-list"></span>&nbsp;日记分类管理</a></li>
                 <li class="active"><a href="#"> <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心</a></li>
             </ul>
@@ -84,7 +87,7 @@
 
             </div>
             <div class="data_list">
-                <div class="data_list_title">t
+                <div class="data_list_title">
                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;按日志日期
                 </div>
                 <div class="diary_datas">

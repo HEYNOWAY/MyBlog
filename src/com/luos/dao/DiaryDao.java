@@ -116,6 +116,15 @@ public class DiaryDao {
         return dairiesArrayList;
     }
 
+    /**
+     * 根据userid获取日志详细信息
+     *
+     * @param conn
+     * @param diaryId
+     * @return
+     * @throws SQLException
+     * @throws ParseException
+     */
     public Diary diaryShow(Connection conn, String diaryId) throws SQLException, ParseException {
         Diary diary = new Diary();
         String sql = "select * from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId and t1.diaryId = ?";
@@ -133,15 +142,32 @@ public class DiaryDao {
         return diary;
     }
 
-
-    public static void main(String[] args){
-        try {
-            Connection conn = DbUtil.getConn();
-            DiaryDao diaryDao = new DiaryDao();
-            Diary diary = diaryDao.diaryShow(conn,"37");
-            System.out.println(diary);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    /**
+     * 添加日志
+     *
+     * @param conn
+     * @param diary
+     * @return
+     * @throws SQLException
+     */
+    public int addDiary(Connection conn, Diary diary) throws SQLException {
+        String sql = "INSERT INTO t_diary values(null,?,?,?,now())";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,diary.getTitle());
+        pstmt.setString(2,diary.getContent());
+        pstmt.setInt(3,diary.getTypeId());
+        return pstmt.executeUpdate();
     }
+
+
+//    public static void main(String[] args){
+//        try {
+//            Connection conn = DbUtil.getConn();
+//            DiaryDao diaryDao = new DiaryDao();
+//            Diary diary = diaryDao.diaryShow(conn,"37");
+//            System.out.println(diary);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
