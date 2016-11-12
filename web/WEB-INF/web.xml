@@ -37,4 +37,14 @@
         <filter-name>loginFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <servlet>
+        <servlet-name>diaryServlet</servlet-name>
+        <servlet-class>com.luos.web.DiaryServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>diaryServlet</servlet-name>
+        <url-pattern>/diary</url-pattern>
+    </servlet-mapping>
 </web-app>

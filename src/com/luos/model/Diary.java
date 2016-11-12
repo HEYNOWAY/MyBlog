@@ -1,5 +1,7 @@
 package com.luos.model;
 
+import com.luos.util.DateFormatUtil;
+
 import java.util.Date;
 
 /**
@@ -7,11 +9,12 @@ import java.util.Date;
  *
  * Created by luos on 2016/11/1.
  */
+
 public class Diary {
     /**
      * 日志ID
      */
-    private int dairyId;
+    private int diaryId;
 
     /**
      * 日志标题
@@ -24,9 +27,14 @@ public class Diary {
     private String content;
 
     /**
-     * 日志类别
+     * 日志类别id
      */
     private int typeId = -1;
+
+    /**
+     * 日志类别名称
+     */
+    private String typeName;
 
     /**
      * 日志发布日期
@@ -36,12 +44,12 @@ public class Diary {
     private String releaseDateStr;
     private int diaryCount;
 
-    public int getDairyId() {
-        return dairyId;
+    public int getDiaryId() {
+        return diaryId;
     }
 
-    public void setDairyId(int dairyId) {
-        this.dairyId = dairyId;
+    public void setDiaryId(int diaryId) {
+        this.diaryId = diaryId;
     }
 
     public String getTitle() {
@@ -66,6 +74,14 @@ public class Diary {
 
     public void setTypeId(int typeId) {
         this.typeId = typeId;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public Date getReleaseDate() {
@@ -95,6 +111,11 @@ public class Diary {
 
     @Override
     public String toString() {
-        return typeId+" "+title;
+        return "diaryId:"+diaryId
+                +"\ndiaryTitle:"+title
+                +"\ndiaryContent:"+content
+                +"\ndiaryTypeId:"+typeId
+                +"\ndiaryTypeName:"+typeName
+                +"\ndiaryReleaseDate"+ DateFormatUtil.DateToString(releaseDate,"yyyy-MM-dd HH:mm:ss");
     }
 }

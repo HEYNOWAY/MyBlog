@@ -22,8 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 主页面Servle
- *
+ * 日志主页面Servlet
+ * 
  * Created by luos on 2016/10/31.
  */
 public class MainServlet extends HttpServlet {
@@ -36,6 +36,7 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse respone) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
+        HttpSession session = request.getSession();
         int total = 0;  //数据的总条数
         String page = request.getParameter("page"); //当前页面
         if(page==null){
@@ -45,7 +46,7 @@ public class MainServlet extends HttpServlet {
         List<Diary> diaryList = new ArrayList<>(); //日志列表
         List<DiaryType> diaryTypeList = new ArrayList<>(); //日志类型列表
         List<Diary> diariesForDateList = new ArrayList<>();//根据日期分组的日志组列表
-        Diary diary = getDiaryFormSession(request); //从session中获取Diary的值
+        Diary diary = getDiaryFormSession(request,session); //从session中获取Diary的值
 
         //从数据库获取各列表数据
         Connection conn = null;
@@ -71,12 +72,12 @@ public class MainServlet extends HttpServlet {
         //获取底栏的分页
         String pageCode = getPagation(total,Integer.parseInt(page),Integer.parseInt(pageSize));
 
-        //request设置属性
-        request.setAttribute("diariesForDateList",diariesForDateList);
+        //request,session 设置属性
         request.setAttribute("diaryList", diaryList);
-        request.setAttribute("diaryTypeList",diaryTypeList);
+        session.setAttribute("diariesForDateList",diariesForDateList);
+        session.setAttribute("diaryTypeList",diaryTypeList);
         request.setAttribute("pageCode",pageCode);
-        request.setAttribute("mainPage", "dairy/diarylist.jsp");
+        request.setAttribute("mainPage", "diary/diarylist.jsp");
         request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
     }
 
@@ -87,8 +88,7 @@ public class MainServlet extends HttpServlet {
      * @return
      * @throws UnsupportedEncodingException
      */
-    private Diary getDiaryFormSession(HttpServletRequest request) throws UnsupportedEncodingException {
-        HttpSession session = request.getSession();
+    private Diary getDiaryFormSession(HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
         String s_typeId=request.getParameter("s_typeId");
         String s_releaseDateStr=request.getParameter("s_releaseDateStr");
 
@@ -109,6 +109,7 @@ public class MainServlet extends HttpServlet {
                 session.removeAttribute("s_releaseDateStr");
                 session.removeAttribute("s_title");
             }
+
             if(StringUtil.isNotEmpty(s_releaseDateStr)){
                 diary.setReleaseDateStr(s_releaseDateStr);
                 session.setAttribute("s_releaseDateStr", s_releaseDateStr);

@@ -36,13 +36,13 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li role="presentation" class="active"><a href="#"> <span class="glyphicon glyphicon-home"></span>&nbsp;主页</a>
+                <li role="presentation" class="active"><a href="main?all=true"> <span class="glyphicon glyphicon-home"></span>&nbsp;主页</a>
                 </li>
                 <li class="active"><a href="#"> <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日记</a></li>
                 <li class="active"><a href="#"> <span class="glyphicon glyphicon-th-list"></span>&nbsp;日记分类管理</a></li>
                 <li class="active"><a href="#"> <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心</a></li>
             </ul>
-            <form name="myForm" class="navbar-form navbar-right" method="post" action="">
+            <form name="myForm" class="navbar-form navbar-right" method="post" action="main?all=true">
                 <input class="form-control" id="s_title" name="s_title" type="text" placeholder="Search...">
                 <button type="submit" class="btn btn-default">
                     <%--onkeydown="if(event.keyCode==13) myForm.submit()--%>
@@ -54,6 +54,7 @@
 </div>
 <div class="container">
     <div class="row-fluid">
+
         <div class="col-md-9">
             <jsp:include page="${mainPage}"></jsp:include>
         </div>
@@ -99,7 +100,5 @@
 
     </div>
 </div>
-
-
 </body>
 </html>

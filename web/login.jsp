@@ -5,7 +5,7 @@
   Time: 8:55
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=gbk" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8" %>
 <html lang="zh">
 <%@ page import="com.luos.model.User" %>
 <%
@@ -32,7 +32,7 @@
     pageContext.setAttribute("user", new User(userName, passWord));
 %>
 <head>
-    <title>¸öÈË²©¿ÍÈÕÖ¾</title>
+    <title>ä¸ªäººæ—¥è®°æœ¬</title>
     <link href="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet">
     <script src="${pageContext.request.contextPath}/bootstrap-3.3.7-dist/js/jQuery.js"></script>
@@ -83,11 +83,11 @@
             var username = document.getElementById("userName").value;
             var password = document.getElementById("passWord").value;
             if (username == null || username == "") {
-                document.getElementById("error").innerHTML = "ÓÃ»§Ãû²»ÄÜÎª¿Õ";
+                document.getElementById("error").innerHTML = "ç”¨æˆ·åä¸èƒ½ä¸ºç©º";
                 return false;
             }
             if (password == null || password == "") {
-                document.getElementById("error").innerHTML = "ÃÜÂë²»ÄÜÎª¿Õ";
+                document.getElementById("error").innerHTML = "å¯†ç ä¸èƒ½ä¸ºç©º";
                 return false;
             }
             return true;
@@ -99,24 +99,24 @@
 <body>
 <div class="container">
     <form id="form" name="myForm" class="form-signin" action="login" method="post" onsubmit="return checkFrom()">
-        <h2 class="form-signin-heading">²©¿ÍÈÕÖ¾</h2>
-        <span class="input-group-addon">ÓÃ»§Ãû</span>
+        <h2 class="form-signin-heading">ä¸ªäººæ—¥è®°æœ¬</h2>
+        <span class="input-group-addon">ç”¨æˆ·å</span>
         <input id="userName" name="userName" value="${user.userName}" type="text" class="form-control"
                placeholder="Username">
-        <span class="input-group-addon">ÃÜÂë</span>
+        <span class="input-group-addon">å¯†ç </span>
         <input id="passWord" name="passWord" value="${user.passWord }" type="password" class="form-control"
                placeholder="PassWord">
         <div class="checkbox">
             <label>
-                <input id="remember" name="remember" type="checkbox" value="remember-me" > ¼Ç×¡ÕËºÅ
+                <input id="remember" name="remember" type="checkbox" value="remember-me" > è®°ä½æˆ‘
             </label>
             <br/>
             <font id="error" style="color: red; ">${error}</font>
         </div>
-        <button class="btn btn-large btn-primary" type="submit">µÇÂ¼</button>
+        <button class="btn btn-large btn-primary" type="submit">ç™»å½•</button>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-large btn-primary" type="button" onclick="reset() ">ÖØÖÃ</button>
-        <p align="center" style="padding-top: 15px;">°æÈ¨ËùÓĞ ¾Õ»¨</p>
+        <button class="btn btn-large btn-primary" type="button" onclick="reset() ">é‡ç½®</button>
+        <p align="center" style="padding-top: 15px;">ç‰ˆæƒæ‰€æœ‰ èŠèŠ±</p>
     </form>
 </div>
 </body>
