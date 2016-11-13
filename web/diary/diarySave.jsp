@@ -10,20 +10,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <script type="text/javascript">
-    function checkForm(){
-        var title=document.getElementById("title").value;
-        var content=CKEDITOR.instances.content.getData();
-        var typeId=document.getElementById("typeId").value;
-        if(title==null||title==""){
-            document.getElementById("error").innerHTML="标题不能为空！";
+    function checkForm() {
+        var title = document.getElementById("title").value;
+        var content = CKEDITOR.instances.content.getData();
+        var typeId = document.getElementById("typeId").value;
+        if (title == null || title == "") {
+            document.getElementById("error").innerHTML = "标题不能为空！";
             return false;
         }
-        if(content==null||content==""){
-            document.getElementById("error").innerHTML="内容不能为空！";
+        if (content == null || content == "") {
+            document.getElementById("error").innerHTML = "内容不能为空！";
             return false;
         }
-        if(typeId==null||typeId==""){
-            document.getElementById("error").innerHTML="请选择日志类别！";
+        if (typeId == null || typeId == "") {
+            document.getElementById("error").innerHTML = "请选择日志类别！";
             return false;
         }
         return true;
@@ -38,7 +38,8 @@
     <form action="diary?action=save" method="post" onsubmit="return checkForm()">
         <div>
             <div class="diary_title">
-                <input type="text" id="title" name="title" value="${diary.title }" class="input-xlarge" placeholder="日志标题..."/>
+                <input type="text" id="title" name="title" value="${diary.title }" class="input-xlarge"
+                       placeholder="日志标题..."/>
             </div>
 
             <div>
@@ -47,12 +48,14 @@
             <div class="diary_type">
                 <select id="typeId" name="typeId">
                     <option value="">请选择日志类别...</option>
+
                     <c:forEach var="diaryTypeCount" items="${diaryTypeList}">
-                        <option value="${diaryTypeCount.typeId}">${diaryTypeCount.typeName}</option>
+                        <option value="${diaryTypeCount.typeId }" ${diaryTypeCount.typeId==diary.typeId ? 'selected' : ''}>${diaryTypeCount.typeName}</option>
                     </c:forEach>
 
                 </select>
             </div>
+            <input type="hidden" id="diaryId" name="diaryId" value="${diary.diaryId }"/>
             <input type="submit" class="btn btn-primary" value="保存"/>
             <button type="button" class="btn btn-primary" onclick="javascript:history.back()">返回</button>
             <font id="error" color="red">${error }</font>

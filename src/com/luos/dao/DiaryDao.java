@@ -159,6 +159,23 @@ public class DiaryDao {
         return pstmt.executeUpdate();
     }
 
+    public int deleteDiary(Connection conn, String diary) throws SQLException {
+        String sql = "Delete from t_diary where diaryId=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,diary);
+        return  pstmt.executeUpdate();
+    }
+
+    public int updateDiary(Connection conn, Diary diary) throws SQLException {
+        String sql = "Update t_diary set title=?,content=?,typeId=? where diaryId=?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,diary.getTitle());
+        pstmt.setString(2,diary.getContent());
+        pstmt.setInt(3,diary.getTypeId());
+        pstmt.setInt(4,diary.getDiaryId());
+        return pstmt.executeUpdate();
+    }
+
 
 //    public static void main(String[] args){
 //        try {
