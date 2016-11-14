@@ -45,7 +45,7 @@ public class LoginFilter implements Filter {
      */
     private boolean shouldFilt(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Object object = session.getAttribute("current");
+        Object object = session.getAttribute("currentUser");
         String path = request.getServletPath();
         return object == null
                 && path.indexOf("login") < 0

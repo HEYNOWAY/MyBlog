@@ -57,4 +57,14 @@
         <servlet-name>diaryTypeServlet</servlet-name>
         <url-pattern>/diaryType</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>userServelet</servlet-name>
+        <servlet-class>com.luos.web.UserServelet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>userServelet</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
 </web-app>

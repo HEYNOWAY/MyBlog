@@ -82,7 +82,8 @@
 
 .data_list .data_list_title .diaryType_add{
 	float: right;
-	margin-right: 20px;
+	margin-right: 10px;
+	margin-bottom: 10px;
 }
 
 .data_list .diaryType_form{

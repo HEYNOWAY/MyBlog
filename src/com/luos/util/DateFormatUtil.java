@@ -41,4 +41,10 @@ public class DateFormatUtil {
         }
         return  resultDate;
     }
+
+    public static String CurrentDateStr(){
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMddhhmmss");
+        return sdf.format(date);
+    }
 }

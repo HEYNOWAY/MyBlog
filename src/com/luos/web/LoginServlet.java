@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
                 unRememberMe(request,respone);
             }
             HttpSession session = request.getSession();
-            session.setAttribute("current", currentUser);
+            session.setAttribute("currentUser", currentUser);
             request.getRequestDispatcher("main").forward(request, respone);
 
         } else {

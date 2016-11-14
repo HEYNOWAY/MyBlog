@@ -40,7 +40,7 @@
                 <li role="presentation" class="active"><a href="main?all=true"> <span class="glyphicon glyphicon-home"></span>&nbsp;主页</a></li>
                 <li class="active"><a href="diary?action=preSave"> <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日记</a></li>
                 <li class="active"><a href="diaryType?action=list"> <span class="glyphicon glyphicon-th-list"></span>&nbsp;日记分类管理</a></li>
-                <li class="active"><a href="#"> <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心</a></li>
+                <li class="active"><a href="user?action=preSave"> <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心</a></li>
             </ul>
             <form name="myForm" class="navbar-form navbar-right" method="post" action="main?all=true">
                 <input class="form-control" id="s_title" name="s_title" type="text" placeholder="Search...">
@@ -65,10 +65,10 @@
                     <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心
                 </div>
                 <div class="user_image">
-                    <img src="${current.imageName}">
+                    <img src="${currentUser.imageName}"/>
                 </div>
-                <div class="nickName">${current.nickName}</div>
-                <div class="userSign" style="color: #2e6da4">签名：${current.mood }</div>
+                <div class="nickName">${currentUser.nickName}</div>
+                <div class="userSign" style="color: #2e6da4">签名：${currentUser.mood }</div>
             </div>
             <div class="data_list">
                 <div class="data_list_title">
