@@ -41,7 +41,14 @@ public class Diary {
      */
     private Date releaseDate;
 
+    /**
+     * 日志发布日期Sting类型
+     */
     private String releaseDateStr;
+
+    /**
+     * 根据日期分组的日志条数
+     */
     private int diaryCount;
 
     public Diary(){}

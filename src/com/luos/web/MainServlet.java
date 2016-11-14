@@ -34,7 +34,7 @@ public class MainServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse respone) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
         int total = 0;  //数据的总条数
@@ -44,7 +44,7 @@ public class MainServlet extends HttpServlet {
         }
         String pageSize = PropertiesUtil.getValue("pageSize"); //每页的页数多少
         List<Diary> diaryList = new ArrayList<>(); //日志列表
-        List<DiaryType> diaryTypeList = new ArrayList<>(); //日志类型列表
+        List<DiaryType> diaryTypeCountList = new ArrayList<>(); //日志类型列表
         List<Diary> diariesForDateList = new ArrayList<>();//根据日期分组的日志组列表
         Diary diary = getDiaryFormSession(request,session); //从session中获取Diary的值
 
@@ -56,7 +56,7 @@ public class MainServlet extends HttpServlet {
             DiaryTypeDao diaryTypeDao = new DiaryTypeDao();
             PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(pageSize));
             diaryList = diaryDao.diaryList(conn,pageBean,diary);
-            diaryTypeList = diaryTypeDao.diaryTypeList(conn);
+            diaryTypeCountList = diaryTypeDao.diaryTypeCountList(conn);
             diariesForDateList = diaryDao.diaryDateList(conn);
             total = diaryDao.diaryCount(conn,diary);
         } catch (Exception e) {
@@ -75,10 +75,10 @@ public class MainServlet extends HttpServlet {
         //request,session 设置属性
         request.setAttribute("diaryList", diaryList);
         session.setAttribute("diariesForDateList",diariesForDateList);
-        session.setAttribute("diaryTypeList",diaryTypeList);
+        session.setAttribute("diaryTypeCountList",diaryTypeCountList);
         request.setAttribute("pageCode",pageCode);
-        request.setAttribute("mainPage", "diary/diarylist.jsp");
-        request.getRequestDispatcher("mainTemp.jsp").forward(request, respone);
+        request.setAttribute("mainPage", "diary/diaryList.jsp");
+        request.getRequestDispatcher("mainTemp.jsp").forward(request, response);
     }
 
     /**

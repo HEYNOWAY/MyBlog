@@ -21,6 +21,12 @@ public class DiaryType {
      */
     private int count;
 
+    public DiaryType(){}
+
+    public DiaryType(String typeName){
+        this.typeName = typeName;
+    }
+
     public int getTypeId() {
         return typeId;
     }

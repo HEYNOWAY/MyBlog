@@ -25,7 +25,7 @@ public class LoginFilter implements Filter {
 
         if (shouldFilt(request)) {
             //如果过滤掉，回跳到login.jsp页面
-            request.getRequestDispatcher("login.jsp");
+            response.sendRedirect("login.jsp");
         } else {
             //否则继续做下一次过滤
             filterChain.doFilter(servletRequest, servletResponse);
@@ -37,6 +37,12 @@ public class LoginFilter implements Filter {
 
     }
 
+    /**
+     * 是否应该过滤掉
+     *
+     * @param request
+     * @return
+     */
     private boolean shouldFilt(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object object = session.getAttribute("current");

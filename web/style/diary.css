@@ -78,3 +78,13 @@
 	margin-top:20px;
 	text-align: center;
 }
+
+
+.data_list .data_list_title .diaryType_add{
+	float: right;
+	margin-right: 20px;
+}
+
+.data_list .diaryType_form{
+	margin-top:20px;
+}

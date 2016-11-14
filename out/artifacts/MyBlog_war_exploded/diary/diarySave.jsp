@@ -31,9 +31,19 @@
 </script>
 
 <div class="data_list">
-    <div class="data_list_title">
-        <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日志
-    </div>
+    <c:choose>
+        <c:when test="${diary.diaryId!=null}">
+            <div class="data_list_title">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;修改日志
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="data_list_title">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日志
+            </div>
+        </c:otherwise>
+    </c:choose>
+
 
     <form action="diary?action=save" method="post" onsubmit="return checkForm()">
         <div>
@@ -49,7 +59,7 @@
                 <select id="typeId" name="typeId">
                     <option value="">请选择日志类别...</option>
 
-                    <c:forEach var="diaryTypeCount" items="${diaryTypeList}">
+                    <c:forEach var="diaryTypeCount" items="${diaryTypeCountList}">
                         <option value="${diaryTypeCount.typeId }" ${diaryTypeCount.typeId==diary.typeId ? 'selected' : ''}>${diaryTypeCount.typeName}</option>
                     </c:forEach>
 

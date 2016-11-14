@@ -37,12 +37,9 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li role="presentation" class="active"><a href="main?all=true"> <span
-                        class="glyphicon glyphicon-home"></span>&nbsp;主页</a>
-                </li>
-                <li class="active"><a href="diary?action=preSave"> <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日记</a>
-                </li>
-                <li class="active"><a href="#"> <span class="glyphicon glyphicon-th-list"></span>&nbsp;日记分类管理</a></li>
+                <li role="presentation" class="active"><a href="main?all=true"> <span class="glyphicon glyphicon-home"></span>&nbsp;主页</a></li>
+                <li class="active"><a href="diary?action=preSave"> <span class="glyphicon glyphicon-pencil"></span>&nbsp;写日记</a></li>
+                <li class="active"><a href="diaryType?action=list"> <span class="glyphicon glyphicon-th-list"></span>&nbsp;日记分类管理</a></li>
                 <li class="active"><a href="#"> <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心</a></li>
             </ul>
             <form name="myForm" class="navbar-form navbar-right" method="post" action="main?all=true">
@@ -78,7 +75,7 @@
                     <span class="glyphicon glyphicon-tags"></span>&nbsp;按日志类别
                 </div>
                 <div class="diary_datas">
-                    <c:forEach var="diaryType" items="${diaryTypeList}">
+                    <c:forEach var="diaryType" items="${diaryTypeCountList}">
                         <ul>
                             <span>&nbsp;&nbsp;<a href="main?s_typeId=${diaryType.typeId }">${diaryType.typeName}&nbsp;&nbsp;(${diaryType.count})</a></span>
                         </ul>

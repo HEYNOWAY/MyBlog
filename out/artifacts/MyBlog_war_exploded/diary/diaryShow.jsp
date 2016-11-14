@@ -12,7 +12,6 @@
     function deleteDiary(diaryId) {
         if(confirm("是否要删除该日志")){
             window.location="diary?action=delete&diaryId="+diaryId;
-            window.align="center"
         }
     }
 </script>

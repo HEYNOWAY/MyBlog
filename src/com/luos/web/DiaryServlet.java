@@ -68,6 +68,13 @@ public class DiaryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * 保存前准备数据
+     * 修改和添加共用一个jsp页面！
+     *
+     * @param request
+     * @param response
+     */
     private void diaryPreSave(HttpServletRequest request, HttpServletResponse response) {
         String diaryId = request.getParameter("diaryId");
         Connection conn = null;
@@ -91,14 +98,18 @@ public class DiaryServlet extends HttpServlet {
     }
 
 
+    /**
+     * 保存数据
+     *
+     * @param request
+     * @param response
+     */
     private void diarySave(HttpServletRequest request, HttpServletResponse response) {
         String title = request.getParameter("title");
         String content = request.getParameter("content");
         String typeId = request.getParameter("typeId");
         String diaryId = request.getParameter("diaryId");
-
         Diary diary = new Diary(title, content, Integer.parseInt(typeId));
-
 
         Connection conn = null;
         try {
@@ -129,6 +140,12 @@ public class DiaryServlet extends HttpServlet {
         }
     }
 
+    /**
+     * 日志删除
+     *
+     * @param request
+     * @param response
+     */
     private void diaryDelete(HttpServletRequest request, HttpServletResponse response) {
         String diaryId = request.getParameter("diaryId");
         Connection conn = null;

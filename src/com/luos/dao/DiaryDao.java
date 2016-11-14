@@ -159,6 +159,14 @@ public class DiaryDao {
         return pstmt.executeUpdate();
     }
 
+    /**
+     * 删除日志
+     *
+     * @param conn
+     * @param diary
+     * @return
+     * @throws SQLException
+     */
     public int deleteDiary(Connection conn, String diary) throws SQLException {
         String sql = "Delete from t_diary where diaryId=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -166,6 +174,14 @@ public class DiaryDao {
         return  pstmt.executeUpdate();
     }
 
+    /**
+     * 修改日志
+     *
+     * @param conn
+     * @param diary
+     * @return
+     * @throws SQLException
+     */
     public int updateDiary(Connection conn, Diary diary) throws SQLException {
         String sql = "Update t_diary set title=?,content=?,typeId=? where diaryId=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -174,6 +190,26 @@ public class DiaryDao {
         pstmt.setInt(3,diary.getTypeId());
         pstmt.setInt(4,diary.getDiaryId());
         return pstmt.executeUpdate();
+    }
+
+    /**
+     * 该类别下是否存在日志
+     *
+     * @param conn
+     * @param typeId
+     * @return
+     * @throws SQLException
+     */
+    public boolean isExitDiary(Connection conn, String typeId) throws SQLException {
+        String sql = "select * from t_diary where typeId = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,typeId);
+        ResultSet rs = pstmt.executeQuery();
+        if(rs.next()){
+            return  true;
+        } else {
+            return  false;
+        }
     }
 
 
