@@ -1,8 +1,7 @@
 <component name="libraryTable">
   <library name="jstl">
     <CLASSES>
-      <root url="jar://E:/引入包/lib/standard.jar!/" />
-      <root url="jar://E:/引入包/lib/jstl.jar!/" />
+      <root url="jar://$USER_HOME$/jarPakage/jstl.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

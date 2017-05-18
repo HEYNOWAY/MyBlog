@@ -27,7 +27,7 @@
 
     <div class="row-fluid" style="padding-top: 20px;">
         <div class="user_image">
-            <img src="${currentUser.imageName }">
+            <img src="${currentUser.imageName}">
         </div>
 
         <div class="span8">

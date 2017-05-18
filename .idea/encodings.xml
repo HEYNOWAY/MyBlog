@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/src/com/luos/dao/DiaryDao.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/luos/dao/UserDao.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/luos/dao/UserDao.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/com/luos/util/DbUtil.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/com/luos/web/LoginServlet.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/com/luos/web/LoginServlet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/luos/web/MainServlet.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/luos/web/UserServelet.java" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

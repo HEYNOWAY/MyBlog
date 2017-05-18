@@ -8,16 +8,17 @@ import com.luos.util.PropertiesUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
- * ”√ªß¿‡≤Ÿ◊˜
+ * Áî®Êà∑Á±ªÊìç‰Ωú
  *
  * @author Administrator
  */
 public class UserDao {
 
     /**
-     * µ«¬º—È÷§
+     * ÁôªÂΩïÈ™åËØÅ
      *
      * @param conn
      * @param user
@@ -26,7 +27,7 @@ public class UserDao {
      */
     public User login(Connection conn, User user) throws Exception {
         User resultUser = null;
-        String sql = "select * from t_user where userName=? and password=?";
+        String sql = "select * from t_user where userName=? and passWord=?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, user.getUserName());
         pstmt.setString(2, Md5Util.EncoderPwdMd5(user.getPassWord()));
@@ -35,12 +36,20 @@ public class UserDao {
             resultUser = new User();
             resultUser.setUserID(rs.getInt("userId"));
             resultUser.setUserName(rs.getString("userName"));
-            resultUser.setPassWord(rs.getString("password"));
+            resultUser.setPassWord(rs.getString("passWord"));
             resultUser.setNickName(rs.getString("nickName"));
             resultUser.setImageName(PropertiesUtil.getValue("imageFile")+rs.getString("imageName"));
             resultUser.setMood(rs.getString("mood"));
         }
         return resultUser;
+    }
+
+    public int regist(Connection con, User user) throws SQLException {
+        String sql = "insert into t_user (userName,passWord) values (?,?)";
+        PreparedStatement pstmt=con.prepareStatement(sql);
+        pstmt.setString(1,user.getUserName());
+        pstmt.setString(2,Md5Util.EncoderPwdMd5(user.getPassWord()));
+        return pstmt.executeUpdate();
     }
 
     public int userUpdate(Connection con,User user)throws Exception{

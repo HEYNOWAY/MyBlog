@@ -5,6 +5,7 @@ import com.luos.dao.DiaryTypeDao;
 import com.luos.model.Diary;
 import com.luos.model.DiaryType;
 import com.luos.model.PageBean;
+import com.luos.model.User;
 import com.luos.util.DbUtil;
 import com.luos.util.PropertiesUtil;
 import com.luos.util.StringUtil;
@@ -37,6 +38,7 @@ public class MainServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         HttpSession session = request.getSession();
+
         int total = 0;  //数据的总条数
         String page = request.getParameter("page"); //当前页面
         if(page==null){
@@ -77,7 +79,8 @@ public class MainServlet extends HttpServlet {
         session.setAttribute("diariesForDateList",diariesForDateList);
         session.setAttribute("diaryTypeCountList",diaryTypeCountList);
         request.setAttribute("pageCode",pageCode);
-        request.setAttribute("mainPage", "diary/diaryList.jsp");
+        request.setAttribute("mainPage", "/diary/diarylist.jsp");
+        System.out.println("Main image path:"+((User)session.getAttribute("currentUser")).getImageName());
         request.getRequestDispatcher("mainTemp.jsp").forward(request, response);
     }
 

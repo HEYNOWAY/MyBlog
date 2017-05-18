@@ -50,7 +50,8 @@ public class LoginFilter implements Filter {
         return object == null
                 && path.indexOf("login") < 0
                 && path.indexOf("bootstrap-3.3.7-dist") < 0
-                && path.indexOf("images") < 0;
+                && path.indexOf("images") < 0
+                && path.indexOf("regist") < 0;
     }
 
 }

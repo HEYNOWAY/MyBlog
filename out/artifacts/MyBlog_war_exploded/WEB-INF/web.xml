@@ -67,4 +67,14 @@
         <servlet-name>userServelet</servlet-name>
         <url-pattern>/user</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>registServelet</servlet-name>
+        <servlet-class>com.luos.web.RegistServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>registServelet</servlet-name>
+        <url-pattern>/regist</url-pattern>
+    </servlet-mapping>
 </web-app>

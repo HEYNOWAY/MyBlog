@@ -25,10 +25,11 @@ public class DiaryTypeDao {
      */
     public List<DiaryType> diaryTypeCountList(Connection conn) throws SQLException {
         List<DiaryType> list = new ArrayList<>();
-        String sql = "Select diaryTypeId,typeName, count(diaryId) as diaryCount " +
+        String sql = "Select t_diaryType.diaryTypeId,t_diaryType.typeName, count(diaryId) as diaryCount " +
                 "from t_diary Right join t_diaryType " +
                 "on t_diary.typeId = t_diaryType.diaryTypeId " +
                 "GROUP BY typeId ";
+        System.out.println("diaryTypeDao sql:"+sql);
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet resultset = pstmt.executeQuery();
         while (resultset.next()){
@@ -38,6 +39,7 @@ public class DiaryTypeDao {
             diaryType.setCount(resultset.getInt("diaryCount"));
             list.add(diaryType);
         }
+        System.out.println("查询日志条数："+list.size());
         return list;
     }
 

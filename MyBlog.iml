@@ -19,8 +19,45 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9" level="application_server_libraries" />
-    <orderEntry type="library" name="mysql-connectorin" level="project" />
-    <orderEntry type="library" name="jstl" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jarPakage/jstl.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jarPakage/mysql-connectorin.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.0.32 (Ubuntu)" level="application_server_libraries" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jarPakage/standard.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jarPakage/commons-fileupload-1.3.2-src.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="jar://$USER_HOME$/jarPakage/commons-fileupload-1.3.2-src.jar!/" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="commons-fileupload-1.3.2-src" level="project" />
+    <orderEntry type="library" name="commons-fileupload-1.2.1" level="project" />
   </component>
 </module>

@@ -93,6 +93,8 @@
             return true;
         }
 
+
+
     </script>
 </head>
 
@@ -114,8 +116,8 @@
             <font id="error" style="color: red; ">${error}</font>
         </div>
         <button class="btn btn-large btn-primary" type="submit">登录</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-large btn-primary" type="button" onclick="reset() ">重置</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="/regist" class="btn btn-large btn-primary abled">注册</a>
         <p align="center" style="padding-top: 15px;">版权所有 菊花</p>
     </form>
 </div>

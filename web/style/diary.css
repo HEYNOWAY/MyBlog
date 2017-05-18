@@ -76,6 +76,8 @@
 
 .data_list .diary_title{
 	margin-top:20px;
+	margin-bottom: 10px;
+	width: 180px;
 	text-align: center;
 }
 

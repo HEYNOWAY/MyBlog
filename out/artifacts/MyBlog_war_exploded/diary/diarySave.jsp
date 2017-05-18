@@ -48,7 +48,7 @@
     <form action="diary?action=save" method="post" onsubmit="return checkForm()">
         <div>
             <div class="diary_title">
-                <input type="text" id="title" name="title" value="${diary.title }" class="input-xlarge"
+                <input type="text" id="title" name="title" value="${diary.title }" class="input-lg"
                        placeholder="日志标题..."/>
             </div>
 

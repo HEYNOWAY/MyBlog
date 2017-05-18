@@ -45,6 +45,7 @@ public class LoginServlet extends HttpServlet {
             }
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", currentUser);
+            System.out.println("Login image path:"+currentUser.getImageName());
             request.getRequestDispatcher("main").forward(request, respone);
 
         } else {

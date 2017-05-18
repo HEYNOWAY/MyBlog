@@ -33,9 +33,9 @@ public class Md5Util {
         return encoderPwd;
     }
 
-//    public static void main(String[] args){
-//        System.out.print(EncoderPwdMd5("luo"));
-//    }
+    public static void main(String[] args){
+        System.out.print(EncoderPwdMd5("luo"));
+    }
 
 
 }

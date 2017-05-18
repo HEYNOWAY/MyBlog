@@ -18,14 +18,12 @@ import com.luos.model.User;
 import com.luos.util.DateFormatUtil;
 import com.luos.util.DbUtil;
 import com.luos.util.PropertiesUtil;
-
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.FileItemFactory;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.servlet.ServletRequestContext;
 
 /**
  * Created by luos on 2016/11/14.
@@ -83,8 +81,10 @@ public class UserServelet extends HttpServlet{
                 try{
                     imageChange=true;
                     String imageName= DateFormatUtil.CurrentDateStr();
-                    user.setImageName(imageName+"."+item.getName().split("\\.")[1]);
-                    String filePath= PropertiesUtil.getValue("imagePath")+imageName+"."+item.getName().split("\\.")[1];
+                    String image = imageName+"."+item.getName().split("\\.")[1];
+                    user.setImageName(image);
+                    String filePath= PropertiesUtil.getValue("imagePath")+image;
+                    System.out.println("Image Path:"+filePath);
                     item.write(new File(filePath));
                 }catch(Exception e){
                     e.printStackTrace();
@@ -103,10 +103,11 @@ public class UserServelet extends HttpServlet{
             if(saveNums>0){
                 user.setImageName(PropertiesUtil.getValue("imageFile")+user.getImageName());
                 session.setAttribute("currentUser", user);
+                System.out.println("User image path:"+user.getImageName());
                 request.getRequestDispatcher("main?all=true").forward(request, response);
             }else{
                 request.setAttribute("currentUser", user);
-                request.setAttribute("error", "‰øùÂ≠òÂ§±Ë¥•");
+                request.setAttribute("error", "±£¥Ê ß∞‹");
                 request.setAttribute("mainPage", "user/userSave.jsp");
                 request.getRequestDispatcher("mainTemp.jsp").forward(request, response);
             }

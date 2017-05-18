@@ -41,6 +41,7 @@
                     <td>类别名称：</td>
                     <td><input type="text" id="typeName"  name="typeName" value="${diaryType.typeName }"  style="margin-top:5px;height:30px;" /></td>
                 </tr>
+
                 <tr>
                     <td><input type="submit" class="btn btn-primary" value="保存"/></td>
                     <td><button type="button" class="btn btn-primary"  onclick="javascript:history.back()">返回</button>&nbsp;&nbsp;

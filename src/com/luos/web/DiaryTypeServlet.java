@@ -116,10 +116,13 @@ public class DiaryTypeServlet extends HttpServlet {
             if(StringUtil.isNotEmpty(diaryTypeId)){
                 diaryType.setTypeId(Integer.parseInt(diaryTypeId));
                 sumNums = diaryTypeDao.updatediaryType(conn,diaryType);
+                System.out.println("更新日志类型。。。。。"+sumNums);
             } else {
                 sumNums = diaryTypeDao.addDiaryType(conn,diaryType);
+                System.out.println("添加日志类型。。。。。"+sumNums);
             }
             if(sumNums>0){
+                System.out.println("更新页面");
                 request.getRequestDispatcher("diaryType?action=list").forward(request, response);
             } else {
                 request.setAttribute("diaryType",diaryType);
@@ -150,7 +153,7 @@ public class DiaryTypeServlet extends HttpServlet {
         try {
             conn = DbUtil.getConn();
             DiaryDao diaryDao = new DiaryDao();
-            if(diaryDao.isExitDiary(conn,diaryTypeId)){
+            if(diaryDao.isExistDiary(conn,diaryTypeId)){
                 request.setAttribute("error","该类别下有日志内容，不能删除！");
             } else {
                 diaryTypeDao.deleteDiaryType(conn,diaryTypeId);

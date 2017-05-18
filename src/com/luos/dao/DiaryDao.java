@@ -31,7 +31,7 @@ public class DiaryDao {
      */
     public List<Diary> diaryList(Connection conn, PageBean pageBean, Diary s_diary) throws SQLException, ParseException {
         List<Diary> dairyArrayList = new ArrayList<>();
-        StringBuffer sql = new StringBuffer("select * from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId ");
+        StringBuffer sql = new StringBuffer("select * from t_diary t1 , t_diaryType t2 where t1.typeId = t2.diaryTypeId ");
 
         if (StringUtil.isNotEmpty(s_diary.getTitle())) {
             sql.append(" and t1.title like '%" + s_diary.getTitle() + "%'");
@@ -70,8 +70,8 @@ public class DiaryDao {
      */
     public int diaryCount(Connection conn, Diary s_diary) throws SQLException {
         StringBuffer sql = new StringBuffer("select count(*) as total " +
-                "from t_diary t1 , t_diarytype t2 " +
-                "where t1.typeId = t2.diarytypeId ");
+                "from t_diary t1 , t_diaryType t2 " +
+                "where t1.typeId = t2.diaryTypeId ");
         if (StringUtil.isNotEmpty(s_diary.getTitle())) {
             sql.append(" and t1.title like '%" + s_diary.getTitle() + "%'");
         }
@@ -127,7 +127,7 @@ public class DiaryDao {
      */
     public Diary diaryShow(Connection conn, String diaryId) throws SQLException, ParseException {
         Diary diary = new Diary();
-        String sql = "select * from t_diary t1 , t_diarytype t2 where t1.typeId = t2.diarytypeId and t1.diaryId = ?";
+        String sql = "select * from t_diary t1 , t_diaryType t2 where t1.typeId = t2.diaryTypeId and t1.diaryId = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,diaryId);
         ResultSet resultSet = pstmt.executeQuery();
@@ -200,16 +200,12 @@ public class DiaryDao {
      * @return
      * @throws SQLException
      */
-    public boolean isExitDiary(Connection conn, String typeId) throws SQLException {
+    public boolean isExistDiary(Connection conn, String typeId) throws SQLException {
         String sql = "select * from t_diary where typeId = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,typeId);
         ResultSet rs = pstmt.executeQuery();
-        if(rs.next()){
-            return  true;
-        } else {
-            return  false;
-        }
+        return rs.next();
     }
 
 
