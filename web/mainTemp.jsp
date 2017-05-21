@@ -65,7 +65,7 @@
                     <span class="glyphicon glyphicon-user"></span>&nbsp;个人中心
                 </div>
                 <div class="user_image">
-                   <img src="${currentUser.imageName}" class="img-polaroid" />
+                   <img src="${currentUser.imageName}" class="img-polaroid"/>
                 </div>
                 <div class="nickName">${currentUser.nickName}</div>
                 <div class="userSign" style="color: #2e6da4">签名：${currentUser.mood }</div>

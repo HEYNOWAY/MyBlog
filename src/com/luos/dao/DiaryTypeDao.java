@@ -23,12 +23,13 @@ public class DiaryTypeDao {
      * @return
      * @throws SQLException
      */
-    public List<DiaryType> diaryTypeCountList(Connection conn) throws SQLException {
+    public List<DiaryType> diaryTypeCountList(Connection conn, int userId) throws SQLException {
         List<DiaryType> list = new ArrayList<>();
         String sql = "Select t_diaryType.diaryTypeId,t_diaryType.typeName, count(diaryId) as diaryCount " +
                 "from t_diary Right join t_diaryType " +
                 "on t_diary.typeId = t_diaryType.diaryTypeId " +
-                "GROUP BY typeId ";
+                "where t_diary.ownerId = " + userId +
+                " GROUP BY typeId ";
         System.out.println("diaryTypeDao sql:"+sql);
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet resultset = pstmt.executeQuery();
@@ -50,9 +51,9 @@ public class DiaryTypeDao {
      * @return
      * @throws Exception
      */
-    public List<DiaryType> diaryTypeList(Connection con)throws Exception{
+    public List<DiaryType> diaryTypeList(Connection con, int userId)throws Exception{
         List<DiaryType> diaryTypeList=new ArrayList<DiaryType>();
-        String sql="select * from t_diaryType";
+        String sql="select * from t_diaryType where ownerId = "+userId;
         PreparedStatement pstmt=con.prepareStatement(sql);
         ResultSet rs=pstmt.executeQuery();
         while(rs.next()){
@@ -73,9 +74,10 @@ public class DiaryTypeDao {
      * @throws Exception
      */
     public int addDiaryType(Connection conn,DiaryType diaryType)throws Exception{
-        String sql="insert into t_diaryType values(null,?)";
+        String sql="insert into t_diaryType values(null,?,?)";
         PreparedStatement pstmt=conn.prepareStatement(sql);
         pstmt.setString(1, diaryType.getTypeName());
+        pstmt.setInt(2,diaryType.getOwnerId());
         return pstmt.executeUpdate();
     }
 

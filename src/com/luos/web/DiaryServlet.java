@@ -2,6 +2,7 @@ package com.luos.web;
 
 import com.luos.dao.DiaryDao;
 import com.luos.model.Diary;
+import com.luos.model.User;
 import com.luos.util.DbUtil;
 import com.luos.util.StringUtil;
 
@@ -9,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -109,7 +111,9 @@ public class DiaryServlet extends HttpServlet {
         String content = request.getParameter("content");
         String typeId = request.getParameter("typeId");
         String diaryId = request.getParameter("diaryId");
-        Diary diary = new Diary(title, content, Integer.parseInt(typeId));
+        HttpSession session = request.getSession();
+        int userId = ((User)session.getAttribute("currentUser")).getUserID();
+        Diary diary = new Diary(userId,title, content, Integer.parseInt(typeId));
 
         Connection conn = null;
         try {

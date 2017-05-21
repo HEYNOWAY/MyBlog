@@ -29,10 +29,10 @@ public class DiaryDao {
      * @throws SQLException
      * @throws ParseException
      */
-    public List<Diary> diaryList(Connection conn, PageBean pageBean, Diary s_diary) throws SQLException, ParseException {
+    public List<Diary> diaryList(Connection conn, PageBean pageBean, Diary s_diary, int userId) throws SQLException, ParseException {
         List<Diary> dairyArrayList = new ArrayList<>();
-        StringBuffer sql = new StringBuffer("select * from t_diary t1 , t_diaryType t2 where t1.typeId = t2.diaryTypeId ");
-
+        StringBuffer sql = new StringBuffer("select * from t_diary t1 , t_diaryType t2 where t1.typeId = t2.diaryTypeId and t1.ownerId = "+userId);
+        System.out.println("DiaryList:"+sql.toString());
         if (StringUtil.isNotEmpty(s_diary.getTitle())) {
             sql.append(" and t1.title like '%" + s_diary.getTitle() + "%'");
         }
@@ -68,10 +68,10 @@ public class DiaryDao {
      * @return
      * @throws SQLException
      */
-    public int diaryCount(Connection conn, Diary s_diary) throws SQLException {
+    public int diaryCount(Connection conn, Diary s_diary, int userId) throws SQLException {
         StringBuffer sql = new StringBuffer("select count(*) as total " +
                 "from t_diary t1 , t_diaryType t2 " +
-                "where t1.typeId = t2.diaryTypeId ");
+                "where t1.typeId = t2.diaryTypeId and t1.ownerId = "+userId);
         if (StringUtil.isNotEmpty(s_diary.getTitle())) {
             sql.append(" and t1.title like '%" + s_diary.getTitle() + "%'");
         }
@@ -98,11 +98,12 @@ public class DiaryDao {
      * @return
      * @throws SQLException
      */
-    public List<Diary> diaryDateList(Connection conn) throws SQLException {
+    public List<Diary> diaryDateList(Connection conn, int userId) throws SQLException {
         List<Diary> dairiesArrayList = new ArrayList<>();
         String sql = "select DATE_FORMAT(releaseDate,'%Y年%m月') as releaseDateStr, count(*) as diaryCount " +
                 "from t_diary " +
-                "group by DATE_FORMAT(releaseDate,'%Y年%m月') " +
+                "where ownerId = "+userId+
+                " group by DATE_FORMAT(releaseDate,'%Y年%m月') " +
                 "order by DATE_FORMAT(releaseDate,'%Y年%m月') desc";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         ResultSet resultSet = pstmt.executeQuery();
@@ -117,7 +118,7 @@ public class DiaryDao {
     }
 
     /**
-     * 根据userid获取日志详细信息
+     * 根据diaryid获取日志详细信息
      *
      * @param conn
      * @param diaryId
@@ -151,11 +152,12 @@ public class DiaryDao {
      * @throws SQLException
      */
     public int addDiary(Connection conn, Diary diary) throws SQLException {
-        String sql = "INSERT INTO t_diary values(null,?,?,?,now())";
+        String sql = "INSERT INTO t_diary values(null,?,?,?,?,now())";
         PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1,diary.getTitle());
-        pstmt.setString(2,diary.getContent());
-        pstmt.setInt(3,diary.getTypeId());
+        pstmt.setInt(1,diary.getOwnerId());
+        pstmt.setString(2,diary.getTitle());
+        pstmt.setString(3,diary.getContent());
+        pstmt.setInt(4,diary.getTypeId());
         return pstmt.executeUpdate();
     }
 
@@ -207,16 +209,4 @@ public class DiaryDao {
         ResultSet rs = pstmt.executeQuery();
         return rs.next();
     }
-
-
-//    public static void main(String[] args){
-//        try {
-//            Connection conn = DbUtil.getConn();
-//            DiaryDao diaryDao = new DiaryDao();
-//            Diary diary = diaryDao.diaryShow(conn,"37");
-//            System.out.println(diary);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -3,6 +3,7 @@ package com.luos.web;
 import com.luos.dao.UserDao;
 import com.luos.model.User;
 import com.luos.util.DbUtil;
+import com.luos.util.PropertiesUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -43,8 +44,15 @@ public class LoginServlet extends HttpServlet {
             } else {
                 unRememberMe(request,respone);
             }
+
+            String imageName = currentUser.getImageName().replaceFirst(PropertiesUtil.getValue("imageFile"), "");
+            if(imageName.equals("null")||"".equals(imageName)||imageName==null){
+                currentUser.setImageName(PropertiesUtil.getValue("imageFile")+"default.jpg");
+                System.out.println("Login after:"+currentUser.getImageName());
+            }
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", currentUser);
+
             System.out.println("Login image path:"+currentUser.getImageName());
             request.getRequestDispatcher("main").forward(request, respone);
 

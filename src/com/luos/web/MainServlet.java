@@ -46,6 +46,7 @@ public class MainServlet extends HttpServlet {
         }
         String pageSize = PropertiesUtil.getValue("pageSize"); //每页的页数多少
         List<Diary> diaryList = new ArrayList<>(); //日志列表
+        List<DiaryType> diaryTypeList = new ArrayList<>();
         List<DiaryType> diaryTypeCountList = new ArrayList<>(); //日志类型列表
         List<Diary> diariesForDateList = new ArrayList<>();//根据日期分组的日志组列表
         Diary diary = getDiaryFormSession(request,session); //从session中获取Diary的值
@@ -57,10 +58,12 @@ public class MainServlet extends HttpServlet {
             DiaryDao diaryDao = new DiaryDao();
             DiaryTypeDao diaryTypeDao = new DiaryTypeDao();
             PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(pageSize));
-            diaryList = diaryDao.diaryList(conn,pageBean,diary);
-            diaryTypeCountList = diaryTypeDao.diaryTypeCountList(conn);
-            diariesForDateList = diaryDao.diaryDateList(conn);
-            total = diaryDao.diaryCount(conn,diary);
+            int userId = ((User)session.getAttribute("currentUser")).getUserID();
+            diaryList = diaryDao.diaryList(conn,pageBean,diary,userId);
+            diaryTypeCountList = diaryTypeDao.diaryTypeCountList(conn,userId);
+            diaryTypeList = diaryTypeDao.diaryTypeList(conn,userId);
+            diariesForDateList = diaryDao.diaryDateList(conn,userId);
+            total = diaryDao.diaryCount(conn,diary,userId);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -78,6 +81,7 @@ public class MainServlet extends HttpServlet {
         request.setAttribute("diaryList", diaryList);
         session.setAttribute("diariesForDateList",diariesForDateList);
         session.setAttribute("diaryTypeCountList",diaryTypeCountList);
+        session.setAttribute("diaryTypeList",diaryTypeList);
         request.setAttribute("pageCode",pageCode);
         request.setAttribute("mainPage", "/diary/diarylist.jsp");
         System.out.println("Main image path:"+((User)session.getAttribute("currentUser")).getImageName());

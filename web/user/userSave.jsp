@@ -45,7 +45,7 @@
                     <tr>
                         <td valign="top">个人心情：</td>
                         <td>
-							<textarea id="mood" name="mood" rows="10" style="width: 100%">${currentUser.mood }
+							<textarea id="mood" name="mood" rows="10" style="margin-top:5px;width: 100%">${currentUser.mood }
                             </textarea>
                         </td>
                     </tr>

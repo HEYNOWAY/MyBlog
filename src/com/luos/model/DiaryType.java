@@ -12,6 +12,11 @@ public class DiaryType {
     private int typeId;
 
     /**
+     * 用户ID
+     */
+    private int ownerId;
+
+    /**
      * 日志类别的名称
      */
     private String typeName;
@@ -23,8 +28,9 @@ public class DiaryType {
 
     public DiaryType(){}
 
-    public DiaryType(String typeName){
+    public DiaryType(String typeName, int ownerId){
         this.typeName = typeName;
+        this.ownerId = ownerId;
     }
 
     public int getTypeId() {
@@ -34,6 +40,10 @@ public class DiaryType {
     public void setTypeId(int typeId) {
         this.typeId = typeId;
     }
+
+    public int getOwnerId(){return ownerId;}
+
+    public void setOwnerId(int ownerId){this.ownerId = ownerId;}
 
     public String getTypeName() {
         return typeName;

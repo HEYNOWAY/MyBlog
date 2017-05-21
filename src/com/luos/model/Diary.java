@@ -17,6 +17,11 @@ public class Diary {
     private int diaryId;
 
     /**
+     * 用户ID
+     */
+    private int ownerId;
+
+    /**
      * 日志标题
      */
     private String title;
@@ -53,7 +58,8 @@ public class Diary {
 
     public Diary(){}
 
-    public Diary(String title,String content,int typeId){
+    public Diary(int ownerId, String title,String content,int typeId){
+        this.ownerId = ownerId;
         this.title = title;
         this.content = content;
         this.typeId = typeId;
@@ -66,6 +72,10 @@ public class Diary {
     public void setDiaryId(int diaryId) {
         this.diaryId = diaryId;
     }
+
+    public int getOwnerId(){return ownerId;}
+
+    public void setOwnerId(int ownerId){this.ownerId = ownerId;}
 
     public String getTitle() {
         return title;

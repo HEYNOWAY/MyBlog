@@ -3,6 +3,7 @@ package com.luos.web;
 import com.luos.dao.DiaryDao;
 import com.luos.dao.DiaryTypeDao;
 import com.luos.model.DiaryType;
+import com.luos.model.User;
 import com.luos.util.DbUtil;
 import com.luos.util.StringUtil;
 
@@ -10,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -51,9 +53,12 @@ public class DiaryTypeServlet extends HttpServlet {
      */
     private void diaryTypeShow(HttpServletRequest request, HttpServletResponse response) {
         Connection conn = null;
+        HttpSession session = request.getSession();
+
         try {
             conn = DbUtil.getConn();
-            List<DiaryType> diaryTypeList = diaryTypeDao.diaryTypeList(conn);
+            int userId = ((User)session.getAttribute("currentUser")).getUserID();
+            List<DiaryType> diaryTypeList = diaryTypeDao.diaryTypeList(conn,userId);
             request.setAttribute("diaryTypeList",diaryTypeList);
             request.setAttribute("mainPage","diaryType/diaryTypeList.jsp");
             request.getRequestDispatcher("mainTemp.jsp").forward(request, response);
@@ -108,7 +113,9 @@ public class DiaryTypeServlet extends HttpServlet {
     private void diaryTypeSave(HttpServletRequest request, HttpServletResponse response) {
         String diaryTypeId = request.getParameter("typeId");
         String diaryTypeName = request.getParameter("typeName");
-        DiaryType diaryType = new DiaryType(diaryTypeName);
+        HttpSession session = request.getSession();
+        int userId = ((User)session.getAttribute("currentUser")).getUserID();
+        DiaryType diaryType = new DiaryType(diaryTypeName,userId);
         Connection conn = null;
         int sumNums;
         try {
